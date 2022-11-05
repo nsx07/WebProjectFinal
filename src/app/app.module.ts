@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreComponent } from './components/components/core/core.component';
+import {ButtonModule} from 'primeng/button';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +15,8 @@ import { CoreComponent } from './components/components/core/core.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

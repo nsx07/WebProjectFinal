@@ -12,47 +12,49 @@ export class CoreComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public matrix = [
-    [0,0,0],
-    [0,0,0],
-    [0,0,0]
+
+  /*
+  null - initial state
+  1 - X
+  0 - O
+  */
+  public matrix : any[] = [
+    [null,null,null],
+    [null,null,null],
+    [null,null,null]
   ]
 
-  public markerTurn! : string
-
-  public movements = {
-    option : this.markerTurn == 'X' ?  true : false ,
-    putX :  'fa-solid fa-xmark fa-4x',
-    putO :  'fa-regular fa-circle fa-3x'
-  }
+  public playerTurn = true;
+  public markerTurn = this.playerTurn ? '<i class="fa-solid fa-xmark fa-4x"></i>' : '<i class="fa-regular fa-circle fa-3x"></i>'
+  public tempVar! : any[]
 
   public insertIn = {
-    AA : (...rest : any[]) => {
-      this.matrix[0][0] = 1
+
+    put : (rest : any[], id : string) => {
+      if (!this.matrix[rest[0]][rest[1]]) {
+        this.tempVar = [rest, id]
+        this.matrix[rest[0]][rest[1]] = this.playerTurn ? 1 : 0;
+        const element : HTMLElement = document.getElementById(id) || document.createElement('div');
+        element.innerHTML = this.playerTurn ? '<i class="fa-solid fa-xmark fa-4x"></i>' : '<i class="fa-regular fa-circle fa-3x"></i>'
+        this.playerTurn = !this.playerTurn
+        this.showWinner()
+        console.log(this.matrix, this.playerTurn);
+      }
     },
-    AB : (...rest : any[]) => {
-      this.matrix[0][1] = 1
-    },
-    AC : (...rest : any[]) => {
-      this.matrix[0][2] = 1
-    },
-    BA : (...rest : any[]) => {
-      this.matrix[1][0] = 1
-    },
-    BB : (...rest : any[]) => {
-      this.matrix[1][1] = 1
-    },
-    BC : (...rest : any[]) => {
-      this.matrix[1][2]
-    },
-    CA : (...rest : any[]) => {
-      this.matrix[2][0] = 1
-    },
-    CB : (...rest : any[]) => {
-      this.matrix[2][1]
-    },
-    CC : (...rest : any[]) => {
-      this.matrix[2][2]
-    },
+    back : () => {
+      const position = this.tempVar[0]
+      this.matrix[position[0]][position[1]] = null
+      const element : HTMLElement = document.getElementById(this.tempVar[2]) || document.createElement('div');
+
+    }
+  }
+  public showWinner() {
+    for (let i = 0; i < this.matrix.length; i++) {
+      const linha : any[] = this.matrix[i]
+      const remain = linha.filter((item => item === linha[0] && item !== null))
+      !remain ? console.log('Nothing') : remain.length === 3 ? console.log('Winner') : console.log('Nothing')
+      console.log(linha, remain)
+    }
+
   }
 }
