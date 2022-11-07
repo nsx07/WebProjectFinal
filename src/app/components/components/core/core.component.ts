@@ -9,15 +9,8 @@ import { TitleStrategy } from '@angular/router';
 export class CoreComponent implements OnInit {
 
   constructor() { }
-
   ngOnInit(): void {}
 
-
-  /*
-  null - initial state
-  1 - X
-  0 - O
-  */
   public matrix : any[] = [
     [null,null,null],
     [null,null,null],
@@ -25,11 +18,8 @@ export class CoreComponent implements OnInit {
   ]
 
   public playerTurn = true;
-  public markerTurn = this.playerTurn ? '<i class="fa-solid fa-xmark fa-4x"></i>' : '<i class="fa-regular fa-circle fa-3x"></i>'
   public tempVar! : any[]
-
   public insertIn = {
-
     put : (rest : any[], id : string) => {
       if (!this.matrix[rest[0]][rest[1]]) {
         this.tempVar = [rest, id]
@@ -37,24 +27,30 @@ export class CoreComponent implements OnInit {
         const element : HTMLElement = document.getElementById(id) || document.createElement('div');
         element.innerHTML = this.playerTurn ? '<i class="fa-solid fa-xmark fa-4x"></i>' : '<i class="fa-regular fa-circle fa-3x"></i>'
         this.playerTurn = !this.playerTurn
-        this.showWinner()
         console.log(this.matrix, this.playerTurn);
+        if (this.showWinner()) {
+          location.reload()
+        }
       }
     },
-    back : () => {
-      const position = this.tempVar[0]
-      this.matrix[position[0]][position[1]] = null
-      const element : HTMLElement = document.getElementById(this.tempVar[2]) || document.createElement('div');
-
-    }
+    back : () => {}
   }
-  public showWinner() {
+
+  public showWinner() : boolean {
+    const mainDiagonal : any[] = []
+    const secDiagonal : any[] = []
     for (let i = 0; i < this.matrix.length; i++) {
       const linha : any[] = this.matrix[i]
-      const remain = linha.filter((item => item === linha[0] && item !== null))
-      !remain ? console.log('Nothing') : remain.length === 3 ? console.log('Winner') : console.log('Nothing')
-      console.log(linha, remain)
+      const remainRow = linha.filter((item => item === linha[0] && item !== null))
+      let colum : any[] = []
+      for (let j = 0; j < 3; j++) colum.push(this.matrix[j][i])
+      const remainColum = colum.filter((item => item === colum[0] && item !== null))
+      mainDiagonal.push(this.matrix[i][i])
+      secDiagonal.push(this.matrix[i][this.matrix.length-1-i])
+      if (remainRow.length === 3 || remainColum.length === 3 ) return true
     }
-
+    const remainDiagMain = mainDiagonal.filter((item => item === mainDiagonal[0] && item != null))
+    const remainDiagSec = secDiagonal.filter((item => item === secDiagonal[0] && item != null))
+    return remainDiagMain.length === 3 || remainDiagSec.length === 3 ? true : false
   }
 }
