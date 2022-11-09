@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreComponent } from './components/components/core/core.component';
 import {ButtonModule} from 'primeng/button';
-
+import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog'
+import { Dialog, DialogModule } from 'primeng/dialog'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -14,9 +16,12 @@ import {ButtonModule} from 'primeng/button';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    ButtonModule
+    ButtonModule,
+    ConfirmDialogModule,
+    DialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

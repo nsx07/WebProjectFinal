@@ -8,6 +8,14 @@ import { TitleStrategy } from '@angular/router';
 })
 export class CoreComponent implements OnInit {
 
+  public playerTurn = true;
+  public status = {
+    on : true,
+    win : false,
+    tie : false,
+    winner : ``
+  }
+
   constructor() { }
   ngOnInit(): void {}
 
@@ -17,23 +25,23 @@ export class CoreComponent implements OnInit {
     [null,null,null]
   ]
 
-  public playerTurn = true;
-  public tempVar! : any[]
   public insertIn = {
     put : (rest : any[], id : string) => {
       if (!this.matrix[rest[0]][rest[1]]) {
-        this.tempVar = [rest, id]
         this.matrix[rest[0]][rest[1]] = this.playerTurn ? 1 : 0;
         const element : HTMLElement = document.getElementById(id) || document.createElement('div');
         element.innerHTML = this.playerTurn ? '<i class="fa-solid fa-xmark fa-4x"></i>' : '<i class="fa-regular fa-circle fa-3x"></i>'
         this.playerTurn = !this.playerTurn
-        console.log(this.matrix, this.playerTurn);
-        if (this.showWinner()) {
-          location.reload()
-        }
+        if (this.showWinner() || !this.tie()) location.reload()
       }
-    },
-    back : () => {}
+    }
+  }
+
+  public tie() {
+    let arr : any[] = []
+    this.matrix.forEach((row) => arr.push(row.filter((item : any ) => item === null)))
+    arr = arr.flatMap(num => num)
+    return arr.length < 1 ? false : true
   }
 
   public showWinner() : boolean {
