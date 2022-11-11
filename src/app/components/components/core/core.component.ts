@@ -10,10 +10,11 @@ export class CoreComponent implements OnInit {
 
   public playerTurn = true;
   public status = {
-    on : true,
+    on : false,
     win : false,
     tie : false,
-    winner : ``
+    winner : ``,
+    reload : false
   }
 
   constructor() { }
@@ -32,8 +33,19 @@ export class CoreComponent implements OnInit {
         const element : HTMLElement = document.getElementById(id) || document.createElement('div');
         element.innerHTML = this.playerTurn ? '<i class="fa-solid fa-xmark fa-4x"></i>' : '<i class="fa-regular fa-circle fa-3x"></i>'
         this.playerTurn = !this.playerTurn
-        if (this.showWinner() || !this.tie()) location.reload()
+        const reload = this.win() || this.tie() ? setInterval(()=> {
+          this.status.reload ? location.reload() : 0
+        }, 500) : 0
+        if (this.win()) {
+          this.status.on = true
+          this.status.win = true
+        } else if (this.tie() ){
+          this.status.on = true
+          this.status.tie = true
+          this.status.win = false
+        console.log(this.status, this.tie(), this.win())
       }
+    }
     }
   }
 
@@ -41,10 +53,10 @@ export class CoreComponent implements OnInit {
     let arr : any[] = []
     this.matrix.forEach((row) => arr.push(row.filter((item : any ) => item === null)))
     arr = arr.flatMap(num => num)
-    return arr.length < 1 ? false : true
+    return arr.includes(null) ? false : true
   }
 
-  public showWinner() : boolean {
+  public win() : boolean {
     const mainDiagonal : any[] = []
     const secDiagonal : any[] = []
     for (let i = 0; i < this.matrix.length; i++) {
@@ -55,10 +67,24 @@ export class CoreComponent implements OnInit {
       const remainColum = colum.filter((item => item === colum[0] && item !== null))
       mainDiagonal.push(this.matrix[i][i])
       secDiagonal.push(this.matrix[i][this.matrix.length-1-i])
-      if (remainRow.length === 3 || remainColum.length === 3 ) return true
+      if (remainRow.length === 3 ) {
+        this.status.winner = remainRow[0]
+        return true
+      } else if ( remainColum.length === 3 ) {
+        this.status.winner = remainColum[0]
+        return true
+      }
     }
     const remainDiagMain = mainDiagonal.filter((item => item === mainDiagonal[0] && item != null))
     const remainDiagSec = secDiagonal.filter((item => item === secDiagonal[0] && item != null))
-    return remainDiagMain.length === 3 || remainDiagSec.length === 3 ? true : false
+    if (remainDiagMain.length === 3) {
+      this.status.winner = remainDiagMain[0]
+      return true
+    } else if (remainDiagSec.length === 3) {
+      this.status.winner = remainDiagSec[0]
+      return true
+    }
+    return false
+    // return remainDiagMain.length === 3 || remainDiagSec.length === 3 ? true : false
   }
 }
