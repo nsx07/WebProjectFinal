@@ -8,6 +8,7 @@ import {ButtonModule} from 'primeng/button';
 import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog'
 import { Dialog, DialogModule } from 'primeng/dialog'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TooltipModule} from "primeng/tooltip"
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppRoutingModule,
     FormsModule,
     ButtonModule,
+    TooltipModule,
     ConfirmDialogModule,
     DialogModule,
   ],

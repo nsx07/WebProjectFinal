@@ -8,6 +8,7 @@ import { TitleStrategy } from '@angular/router';
 })
 export class CoreComponent {
 
+  info = false
   lastPlay : any[] = [];
   playerTurn = true;
   status = {

@@ -4,8 +4,8 @@
 
 <p-dialog [(visible)]="!this.status.on" [closable]="false" [style]="{width: 'max-content', height: 'max-content'}">
   <div class="flex-auto flex justify-content-between">
-    <button pButton icon="pi pi-backward" [disabled]="this.lastPlay.length < 1" (click)="this.undo()"></button>
-    <button pButton icon="pi pi-refresh" (click)="this.refresh()"></button>
+    <button pButton pTooltip="Undo" icon="pi pi-backward" [disabled]="this.lastPlay.length < 1" (click)="this.undo()"></button>
+    <button pButton pTooltip="Refresh" icon="pi pi-refresh" (click)="this.refresh()"></button>
   </div>
     <table style="margin: auto">
       <tbody class="bg-yellow-500" click="movement = !movement">
@@ -26,6 +26,13 @@
         </tr>
       </tbody>
     </table>
+    <button pButton pTooltip="Info" icon="pi pi-info" (click)="info = !info"></button>
+</p-dialog>
+
+<p-dialog header="Sobre" position="bottom" [(visible)]="info" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '70vw'}">
+  <div>
+    <h3>Este trabalho foi desenvolvido pelo aluno Felipe Pires de BSI para a matéria de programação WEB</h3>
+  </div>
 </p-dialog>
 
 <p-dialog [modal]="true" class="text-center" [(visible)]="this.status.on" [closable]="false">
