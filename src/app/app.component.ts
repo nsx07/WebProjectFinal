@@ -59,9 +59,11 @@ export class AppComponent {
   }
 
   undo() {
+    if (this.stackPlays.length)  {
       let loc = this.stackPlays.pop()
       this.matrix[loc[0]] = null
       const element = (document.getElementById(loc[1]) || document.createElement('div')).innerHTML = "";
+    }
   }
 
   refresh() {

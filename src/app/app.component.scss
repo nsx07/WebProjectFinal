@@ -1,0 +1,17 @@
+@media (max-width: 660px) {
+  #imgBanner {
+    content-visibility: hidden;
+  }
+  #imgDialog {
+    content-visibility: visible;
+  }
+}
+@media (min-width: 700px) {
+  #imgBanner {
+    content-visibility: visible;
+  }
+  #imgDialog {
+    content-visibility: hidden;
+  }
+}
+
