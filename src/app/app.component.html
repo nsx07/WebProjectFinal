@@ -1,9 +1,9 @@
 <div class="text-center">
-  <img id="imgBanner" class="p-2" src="../assets/images/baseLogo500_transparent.png" alt="Jogo da Velha"><br>
+  <img id="imgBanner" class="p-2" src="./assets/images/baseLogo500_transparent.png" alt="Jogo da Velha"><br>
  </div>
 
  <p-dialog [(visible)]="!this.status.on" [closable]="false" [showHeader]="false" [style]="{width: 'max-content', height: 'max-content'}">
-  <img id="imgDialog" src="../assets/images/baseLogo500_transparent.png" alt="Jogo da Velha" width="100%" height="40%"><br>
+  <img id="imgDialog" src="./assets/images/baseLogo500_transparent.png" alt="Jogo da Velha" width="100%" height="40%"><br>
    <div class="flex-auto flex justify-content-between">
      <button pButton pTooltip="Undo" icon="pi pi-backward" [disabled]="this.lastPlay.length < 1" (click)="this.undo()"></button>
      <button pButton pTooltip="Refresh" icon="pi pi-refresh" (click)="this.refresh()"></button>
